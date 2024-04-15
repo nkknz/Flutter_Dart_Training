@@ -1,10 +1,24 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/responsive/responsive_layout_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/responsive/mobile_screen_layout.dart';
 import 'package:instagram_clone/responsive/web_screen_layout.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: const FirebaseOptions(
+          apiKey: 'AIzaSyDhnfkY3Saw3n1s_ovxhHpT2U3EnB1JaGo',
+          appId: '1:813720687919:android:3085885ddd8bf1b4f9fdda',
+          messagingSenderId: '813720687919',
+          projectId: 'instagram-clone-2f5bc',
+        ))
+      : await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
