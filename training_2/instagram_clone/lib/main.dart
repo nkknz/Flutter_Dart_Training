@@ -19,6 +19,7 @@ void main() async {
           appId: '1:813720687919:android:3085885ddd8bf1b4f9fdda',
           messagingSenderId: '813720687919',
           projectId: 'instagram-clone-2f5bc',
+          storageBucket: "instagram-clone-2f5bc.appspot.com",
         ))
       : await Firebase.initializeApp();
   runApp(const MyApp());
