@@ -20,6 +20,7 @@ class _SignupScreen extends State<SignupScreen> {
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
 
   //to clear of controllers as soon as the widget gets disposed
   @override
@@ -37,6 +38,27 @@ class _SignupScreen extends State<SignupScreen> {
     setState(() {
       _image = im;
     });
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String res = await AuthMethods().signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      bio: _bioController.text,
+      file: _image!,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+    if (res != 'Success') {
+      showSnackbar(res, context);
+    }
   }
 
   @override
@@ -115,16 +137,7 @@ class _SignupScreen extends State<SignupScreen> {
               const SizedBox(height: 20),
               //button login
               InkWell(
-                onTap: () async {
-                  String res = await AuthMethods().signUpUser(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    username: _usernameController.text,
-                    bio: _bioController.text,
-                    file: _image!,
-                  );
-                  print(res);
-                },
+                onTap: signUpUser,
                 child: Container(
                   width: double.infinity, //max possible value
                   alignment: Alignment.center,
@@ -137,7 +150,13 @@ class _SignupScreen extends State<SignupScreen> {
                     ),
                     color: blueColor,
                   ),
-                  child: const Text('Sign up'),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text('Sign Up'),
                 ),
               ),
               const SizedBox(
