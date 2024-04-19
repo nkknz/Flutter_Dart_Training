@@ -50,6 +50,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -66,5 +67,6 @@ flutter {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-appcheck-debug:16.0.0-beta01'
+    // def multidex_version = "2.0.1"
+    // implementation "androidx.multidex:multidex:$multidex_version"
 }
