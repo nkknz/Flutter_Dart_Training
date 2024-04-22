@@ -11,6 +11,16 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    //passes the model User in user.dart model to access the current data
+    return model.User.fromSnap(snap);
+  }
+
   //sign up user
   //Future because we want it to be async
   //whole function return type changes to future
